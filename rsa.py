@@ -118,7 +118,7 @@ def iteration_property (locator,reslocator, iter = 8):
             probs = {}
             
             for label,conf in {"No Delay" : "NO_DELAY",
-                            #   "Worst Case" : "WORST_CASE",
+                               #"Worst Case" : "WORST_CASE",
                                "Random Delay" : "RANDOM_DELAY"}.items ():
                 path = os.path.join (tmpdir,f"{conf}.xml")
                 with open (path,'w') as ff:
@@ -162,12 +162,64 @@ def iteration_property (locator,reslocator, iter = 8):
             nfig.savefig (reslocator.makeFilePath ("probs.png"))
             
 
+
+
+def runtime (locator,reslocator):
+    inp = "Runtime - {0} : {1}"
+    with hyper.uppaal.Progresser () as progress:
+        reslocator = reslocator.makeSubLocator ("iteration")
+        
+        with open (locator.findModel ("rsa_sa"),'r') as ff:
+            xmlcontent = ff.read ()
+
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            setup = {}
+            probs = {}
+            
+            for label,conf in {"No Delay" : "NO_DELAY",
+                               "Worst Case" : "WORST_CASE",
+                               "Random Delay" : "RANDOM_DELAY"}.items ():
+                path = os.path.join (tmpdir,f"{conf}.xml")
+                with open (path,'w') as ff:
+                    ff.write (xmlcontent.replace ("@ENABLE_RANDOM@",conf))
+                    setup[label] = hyper.uppaal.Uppaal (locator.findUppaal (),path)
+
+
+            def parsestd (tmpdir,stdout):
+                estime = stdout.decode ().split("\n")[3]
+                estimate = estime.split ("=")[1].replace("≈","").strip ().split (" ")[0]
+                print (estimate)
+                print (estime)
+                return (float(estimate))
+            probs  = []
+            labels = []
+
+            query = "E[<=1000;1000] (max: duration)"
+            for l,uppaal in setup.items ():
+                val = uppaal.runHyperVerification (query,parsestd,OBSDELTA,alpha=ALPHA,epsilon=EPSILON)
+                probs.append(val)
+                labels .append (l)
+            
+            nfig = plt.figure ()
+            ax = nfig.subplots ()
+            x = np.arange (len(labels))
+            
+            ax.bar(x, probs, label = l)
+            ax.set_ylabel('Runtime')
+            ax.set_xticks(x, labels)
+            
+            nfig.savefig (reslocator.makeFilePath ("runtime.png"))
+            
+
+
+            
                 
 def rsa_example (locator,reslocator):
     sublocator = reslocator.makeSubLocator ("rsa")
-    full_loop (locator,sublocator)
+    #full_loop (locator,sublocator)
     iteration_property (locator,sublocator)
-    
+    runtime (locator,sublocator)
 
             
 
