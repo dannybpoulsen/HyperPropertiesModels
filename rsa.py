@@ -11,9 +11,9 @@ import hyper.HPSTL
 import hyper.uppaal
 
 ALPHA = 0.01
-EPSILON = 0.05
-UPPER = 10
-
+EPSILON = 0.01
+UPPER = 6
+OBSDELTA = 0.1
 
 def eventuallyAtom (atom,p,time):
     return hyper.HPSTL.Diamond (hyper.HPSTL.Atom (p,atom),0,time)
@@ -62,12 +62,12 @@ def full_loop (locator,reslocator):
             setup = {}
             probs = {}
             for label,conf in {"No Delay" : "NO_DELAY",
-                               "Worst Case" : "WORST_CASE",
+                            #   "Worst Case" : "WORST_CASE",
                                "Random Delay" : "RANDOM_DELAY"}.items ():
                 path = os.path.join (tmpdir,f"{conf}.xml")
                 with open (path,'w') as ff:
                     ff.write (xmlcontent.replace ("@ENABLE_RANDOM@",conf))
-                    setup[label] = hyper.uppaal.Uppaal (locator.findUppaal (),path)
+                setup[label] = hyper.uppaal.Uppaal (locator.findUppaal (),path)
             
 
             
@@ -78,7 +78,7 @@ def full_loop (locator,reslocator):
                 query = makeOverallFormula(150,i)
                 for l,uppaal in setup.items ():
                     progress.message (inp.format (i,l))
-                    res = uppaal.runHyperVerification (query,hyper.uppaal.parseEstim,0.1,alpha=ALPHA,epsilon=EPSILON)
+                    res = uppaal.runHyperVerification (query,hyper.uppaal.parseEstim,OBSDELTA,alpha=ALPHA,epsilon=EPSILON)
                     hist = res.getHistogram ()
                     if hist:
                         counts,bins = hist.counts(),hist.bins ()
@@ -118,7 +118,7 @@ def iteration_property (locator,reslocator, iter = 8):
             probs = {}
             
             for label,conf in {"No Delay" : "NO_DELAY",
-                               "Worst Case" : "WORST_CASE",
+                            #   "Worst Case" : "WORST_CASE",
                                "Random Delay" : "RANDOM_DELAY"}.items ():
                 path = os.path.join (tmpdir,f"{conf}.xml")
                 with open (path,'w') as ff:
@@ -134,7 +134,7 @@ def iteration_property (locator,reslocator, iter = 8):
                 query = makeIterFormula(150,i,iter)
                 for l,uppaal in setup.items ():
                     progress.message (inp.format (i,l))
-                    res = uppaal.runHyperVerification (query,hyper.uppaal.parseEstim,0.1,alpha=ALPHA,epsilon=EPSILON)
+                    res = uppaal.runHyperVerification (query,hyper.uppaal.parseEstim,OBSDELTA,alpha=ALPHA,epsilon=EPSILON)
                     hist = res.getHistogram ()
                     if hist:
                         counts,bins = hist.counts(),hist.bins ()

@@ -143,7 +143,7 @@ if __name__ == "__main__":
 
         
     #Code from https://stackoverflow.com/questions/39296101/python-zipfile-removes-execute-permissions-from-binaries
-        url = "http://localhost:8000/uppaal-4.1.20-stratego-8-beta9-linux64.zip"
+        url = "http://localhost:8000/uppaal-DEV-stratego-hyper-linux64.zip"
         print (f"Downloading pre-release from: {url}")
         http = urllib3.PoolManager ()
         try:
