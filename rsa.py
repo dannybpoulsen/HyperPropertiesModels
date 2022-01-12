@@ -189,8 +189,6 @@ def runtime (locator,reslocator):
             def parsestd (tmpdir,stdout):
                 estime = stdout.decode ().split("\n")[3]
                 estimate = estime.split ("=")[1].replace("≈","").strip ().split (" ")[0]
-                print (estimate)
-                print (estime)
                 return (float(estimate))
             probs  = []
             labels = []
