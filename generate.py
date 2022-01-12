@@ -140,10 +140,10 @@ if __name__ == "__main__":
         import urllib3
         import zipfile
         import io
-
+        
         
     #Code from https://stackoverflow.com/questions/39296101/python-zipfile-removes-execute-permissions-from-binaries
-        url = "http://localhost:8000/uppaal-DEV-stratego-hyper-linux64.zip"
+        url = "https://people.cs.aau.dk/~bc37lv/uppaal/uppaal-hyper/uppaal-DEV-stratego-hyper-linux64.zip"
         print (f"Downloading pre-release from: {url}")
         http = urllib3.PoolManager ()
         try:
@@ -159,6 +159,7 @@ if __name__ == "__main__":
                 os.chmod (outpath, (info.external_attr >> 16))
         else:
             print (f"Error downloading Uppaal from {url}")
+            print(r.status)
             exit ()
 
 
