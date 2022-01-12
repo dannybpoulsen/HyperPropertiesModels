@@ -10,7 +10,7 @@ contains the models used throughout the paper and python scripts for reproducing
 The reproduction package relies on a development version of Uppaal. 
 A stable release from [Uppaal](https://uppaal.org) will not work. 
 
-- The uppaal binary can be downloaded from [Here]("https://people.cs.aau.dk/~bc37lv/uppaal/uppaal-hyper/uppaal-DEV-stratego-hyper-linux64.zip") and must be unpacked in the `bin` sub-directory of this repository.  
+- The uppaal binary can be downloaded from [Here](https://people.cs.aau.dk/~bc37lv/uppaal/uppaal-hyper/uppaal-DEV-stratego-hyper-linux64.zip) and must be unpacked in the `bin` sub-directory of this repository.  
 - If the python script cannot find uppaal-distribution in `bin` it tries to download and unpack it itself.
 
 
