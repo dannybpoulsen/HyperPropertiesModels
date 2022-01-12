@@ -21,7 +21,9 @@ typedef struct {
     int x;
     bool key[SSize];
     bool done;
-}GState;</declaration>
+}GState;
+
+double duration;</declaration>
 	<template>
 		<name>RSA_delay</name>
 		<parameter>GState&amp; s</parameter>
@@ -37,7 +39,6 @@ int count = 0;
 const int excess = 2;
 const int  fixedL = lower*2;
 const int fixedU = upper*2;
-
 
 bool iter_done[SSize];
 
@@ -174,7 +175,7 @@ x = 0</label>
 			<source ref="id3"/>
 			<target ref="id7"/>
 			<label kind="guard" x="-2061" y="-1177">x&gt;=lower</label>
-			<label kind="assignment" x="-2117" y="-1190">iter_done[s.i]  = true, s.i++,x= 0, y=0</label>
+			<label kind="assignment" x="-2117" y="-1190">iter_done[s.i]  = true, s.i++,x=0</label>
 		</transition>
 		<transition id="id25">
 			<source ref="id5"/>
@@ -192,7 +193,7 @@ x = 0</label>
 			<source ref="id7"/>
 			<target ref="id6"/>
 			<label kind="guard" x="-1640" y="-1419">s.i == SSize &amp;&amp;x&gt;=lower</label>
-			<label kind="assignment" x="-1615" y="-1377">x = 0,s.done = true,d=true</label>
+			<label kind="assignment" x="-1776" y="-1377">x = 0,s.done = true,d=true,duration = y</label>
 			<nail x="-2066" y="-1385"/>
 		</transition>
 		<transition id="id28">
@@ -201,8 +202,7 @@ x = 0</label>
 			<label kind="guard" x="-2201" y="-1249">x&gt;=lower</label>
 			<label kind="assignment" x="-2193" y="-1325">s.s = 1,
 s.i = 0,
-x = 0,
-y=0</label>
+x = 0</label>
 		</transition>
 	</template>
 	<template>
