@@ -225,12 +225,3 @@ def rsa_example (locator,reslocator):
 
 
     
-if __name__ == "__main__":
-    import sys
-    import os
-    import tabulate
-    #theHyperProperty ()
-    theHyperIterProperty ()
-    
-    #plt.show ()
-        
