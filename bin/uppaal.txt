@@ -1,0 +1,1 @@
+This is the folder where the pre-release version of Uppaal should be placed.
